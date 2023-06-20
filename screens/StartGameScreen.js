@@ -1,5 +1,6 @@
-import { StyleSheet, View, TextInput } from 'react-native'
+import { StyleSheet, View, Text, TextInput } from 'react-native'
 import PrimaryButton from '../components/PrimaryButton'
+import Title from '../components/Title'
 import { useState } from 'react'
 import Colors from '../constants/Colors'
 import WarningModal from '../components/WarningModal'
@@ -29,22 +30,27 @@ const StartGameScreen = ({startGameHandler}) => {
     }
 
     return (
-      <View style={styles.inputContainer}> 
-        <WarningModal 
-          showModal={showModal} 
-          setShowModal={setShowModal}
-          resetInput={resetInput}
-        />
-        <TextInput
-          onChangeText={ (inpTxt) => { setInputNumber(inpTxt)}}
-          style={styles.numberInput}
-          maxLength={2}
-          keyboardType='number-pad'
-          value={inputNumber}
-        />
-        <View style={styles.buttonContainer}>
-          <PrimaryButton targetFunction={ resetInput }>reset</PrimaryButton>
-          <PrimaryButton targetFunction={ confirmHandler }>confirm</PrimaryButton>
+      <View style={styles.rootContainer}>
+        <Title description='guess my number'/> 
+        <View style={styles.inputContainer}> 
+          <WarningModal 
+            showModal={showModal} 
+            setShowModal={setShowModal}
+            resetInput={resetInput}
+          /> 
+          <Text style={styles.inputContainerHeader}>enter a number</Text>
+          <TextInput
+            onChangeText={ (inpTxt) => { setInputNumber(inpTxt)}}
+            style={styles.numberInput}
+            maxLength={2}
+            keyboardType='number-pad'
+            value={inputNumber}
+          />
+          <View style={styles.buttonContainer}>
+            <PrimaryButton 
+              targetFunction={ resetInput }>reset</PrimaryButton>
+            <PrimaryButton targetFunction={ confirmHandler }>confirm</PrimaryButton>
+          </View>
         </View>
 
       </View>
@@ -52,6 +58,12 @@ const StartGameScreen = ({startGameHandler}) => {
 }
 
 const styles = StyleSheet.create({
+  rootContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    marginTop: 100,
+  },
   inputContainer: {
     backgroundColor: Colors.primary750,
     padding: 16,
@@ -61,6 +73,11 @@ const styles = StyleSheet.create({
     elevation: 12,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  inputContainerHeader: {
+    color: Colors.yellow500,
+    fontSize: 24,
+    textTransform: 'capitalize',
   },
   numberInput: {
     width: 50,
@@ -76,6 +93,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
+    marginTop: 12,
   },
 
 })

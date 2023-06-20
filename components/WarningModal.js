@@ -13,25 +13,25 @@ const WarningModal = ({showModal, setShowModal, resetInput}) => {
     return (
         <Modal  
             visible={showModal} 
-            transparent
-            animationType='slide'
+            transparent={true}
+            animationType='fade'
             hardwareAccelerated
         >
             <View style={styles.centerModal}>
-            <View style={styles.warningModal}>
-                <View style={styles.warningTitle}>
-                    <Text style={styles.warningTitleText}>WARNING!</Text>
-                </View>
+                <View style={styles.warningModal}>
+                    <View style={styles.warningTitle}>
+                        <Text style={styles.warningTitleText}>WARNING!</Text>
+                    </View>
 
-                <View style={styles.warningBody}>
-                    <Text style={styles.warningBodyText}>An invalid number entered. A valid number must be between 0 and 100</Text>
-                </View>
-                
-                <Pressable style={styles.warningButton} onPress={ackWarning} >
-                    <Text style={styles.warningButtonText}>okay</Text>
-                </Pressable>
+                    <View style={styles.warningBody}>
+                        <Text style={styles.warningBodyText}>An invalid number entered. A valid number must be from 1 to 99</Text>
+                    </View>
+                    
+                    <Pressable style={styles.warningButton} onPress={ackWarning} >
+                        <Text style={styles.warningButtonText}>okay</Text>
+                    </Pressable>
 
-            </View>
+                </View>
             </View>
         </Modal>
     )
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: Colors.yellow500,
         borderRadius: 20,
+
     },
     warningTitle: {
         height: '25%',

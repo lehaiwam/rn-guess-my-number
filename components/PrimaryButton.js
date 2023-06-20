@@ -1,11 +1,16 @@
 import { Text, View, StyleSheet, Pressable } from 'react-native'
 import Colors from '../constants/Colors'
 
-const PrimaryButton = ({children, targetFunction}) => {
+const PrimaryButton = ({children, targetFunction, direction}) => {
+
+    const invokeTargetFunction = () => {
+        direction ? targetFunction(direction) : targetFunction()
+    }
+
     return (
         <View style={styles.buttonOuter}>
-            <Pressable style={styles.buttonInner} onPress={ targetFunction } android_ripple={{ color: Colors.yellow500 }} >
-                <Text style={styles.buttonText}>{children}</Text>
+            <Pressable style={styles.buttonInner} onPress={ invokeTargetFunction } android_ripple={{ color: Colors.yellow500 }} >
+                <Text style={[styles.buttonText]}>{children}</Text>
             </Pressable>    
         </View>  
     )
@@ -13,6 +18,8 @@ const PrimaryButton = ({children, targetFunction}) => {
 
 const styles = StyleSheet.create({
     buttonOuter: {
+        borderColor: Colors.yellow500,
+        borderWidth: 1,
         borderRadius: 28,
         margin: 4,
         overflow: 'hidden',
@@ -24,12 +31,12 @@ const styles = StyleSheet.create({
         elevation: 8,
     },  
     buttonText: {
-        color: Colors.white1000,
         textAlign: 'center',
-        textTransform: 'capitalize'
+        textTransform: 'capitalize',
+        color: Colors.white1000,
+        fontSize: 14,
+        fontWeight: 'bold',
     }
-
-
 }) 
 
 export default PrimaryButton

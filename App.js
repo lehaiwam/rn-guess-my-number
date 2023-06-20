@@ -1,17 +1,58 @@
 // import { StatusBar } from 'expo-status-bar';
-import { useState } from 'react';
-import { StyleSheet, ImageBackground, SafeAreaView } from 'react-native';
+import { useState, useEffect } from 'react'
+import { StyleSheet, ImageBackground, SafeAreaView, ImageComponent } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
-import StartGameScreen from './screens/StartGameScreen';
-import GameScreen from './screens/GameScreen';
+import {useFonts} from 'expo-font'
+import AppLoading from 'expo-app-loading'
+
+import StartGameScreen from './screens/StartGameScreen'
+import GameScreen from './screens/GameScreen'
+import GameOverScreen from './screens/GameOverScreen'
 
 export default function App() {
-  const [playerNumber, setPlayerNumber] = useState(null)
+  const [ playerNumber, setPlayerNumber ] = useState(null)
+  const [ gameOver, setGameOver ] = useState(false)
+  const [ numberToGuess, setNumberToGuess ] = useState(null)
+  const [ numberOfRounds, setNumberOfRounds ] = useState(null)
+  const [ guessArrayValues, setGuessArrayValues ] = useState([])
+
+  const [fontsLoaded] = useFonts({
+    'open-sans-regular': require('./assets/fonts/OpenSans-Regular.ttf'),
+    'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf')
+  })
+
+  if (!fontsLoaded) {
+    return <AppLoading />
+  }
 
   const startGameHandler = (selectedNumber) => {
     setPlayerNumber(selectedNumber)
+    setNumberToGuess(selectedNumber) //  Store value for game over screen
+    setGameOver(false)
+  }
 
+  let screen = <StartGameScreen startGameHandler={startGameHandler}/>
 
+  if(gameOver) {
+    screen = <GameOverScreen 
+      numberToGuess={numberToGuess}
+      numberOfRounds={numberOfRounds}
+      guessArrayValues={guessArrayValues}
+      setGuessArrayValues={setGuessArrayValues}
+      setPlayerNumber={setPlayerNumber}
+      setGameOver={setGameOver}/>
+  }
+
+  if (playerNumber) {
+      screen = <GameScreen 
+                  playerNumber={playerNumber} 
+                  setPlayerNumber={setPlayerNumber}
+                  setNumberToGuess={setNumberToGuess}
+                  setNumberOfRounds={setNumberOfRounds}
+                  setGameOver={setGameOver}
+                  guessArrayValues={guessArrayValues}
+                  setGuessArrayValues={setGuessArrayValues}
+                /> 
   }
 
   return (
@@ -23,9 +64,7 @@ export default function App() {
         imageStyle={styles.backgroundImage}
       >
         <SafeAreaView style={styles.rootScreen}>
-          { playerNumber 
-            ? <GameScreen playerNumber={playerNumber} setPlayerNumber={setPlayerNumber}/> 
-            : <StartGameScreen startGameHandler={ startGameHandler }/> }
+          {screen}
         </SafeAreaView>
         
       </ImageBackground>  
