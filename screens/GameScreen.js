@@ -34,14 +34,12 @@ const GameScreen = ({
 
   const [ direction, setDirection ] = useState(null)
 
-  console.log ('\nnumberOfAttempts: ', numberOfAttempts )
   const initialGuess = genRandomNumber( MIN, MAX, playerNumber )
-  console.log ('\n Initial guess: ', initialGuess )
   const [ guessNumber, setGuessNumber ] = useState(initialGuess)
 
   useEffect(()=>{
     if (guessNumber === playerNumber) {
-      console.log('GAME OVER!!! Number: ', guessNumber, 'guessed correctly after', numberOfAttempts, ' attempts.')
+      console.log('\n   GAME OVER!!! Number: ', guessNumber, 'guessed correctly after', numberOfAttempts, ' attempts.')
       setNumberOfRounds(numberOfAttempts)
       setNumberToGuess(guessNumber)
       // Reset values for the next game
@@ -56,24 +54,18 @@ const GameScreen = ({
   
 
   const nextGuessHandler = (direction) => {
-    console.log('\n  playerNumber: ', playerNumber)
-    console.log(', numberOfAttempts: ', numberOfAttempts, ', guessNumber: ', guessNumber, ', direction? ', direction)
-    
+
     if (!numberOfAttempts) {
       numberOfAttempts=1
-      console.log('Adding initial values: ', numberOfAttempts, initialGuess)
       setGuessArrayValues( (currArray) => {
         return ([ [numberOfAttempts, initialGuess], ...currArray ])
       })
     } else {
       numberOfAttempts++
-      console.log('Adding next array values: ', numberOfAttempts, guessNumber)
       setGuessArrayValues( (currArray) => {
         return ([ [numberOfAttempts, guessNumber],  ...currArray ])
       })
     }
-
-    console.log('\n New Array: ', guessArrayValues )
 
     if ((direction === 'lower' && guessNumber < playerNumber) || 
         (direction === 'higher' && guessNumber > playerNumber)) {

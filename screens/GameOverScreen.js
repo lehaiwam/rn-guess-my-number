@@ -1,17 +1,18 @@
-import { StyleSheet, Image , View, Text, Button } from 'react-native'
+import { StyleSheet, Image , View, Text, Dimensions, useWindowDimensions } from 'react-native'
 import PrimaryButton from '../components/PrimaryButton'
 import React from 'react'
 import Title from '../components/Title'
 import Colors from '../constants/Colors'
 
+const deviceWidth = Math.trunc( Dimensions.get("window").width )
+const imgContainerW = Math.trunc(deviceWidth * 0.8)
+
 const GameOverScreen = ({
     setPlayerNumber, 
     setGameOver, 
     numberOfRounds, 
-    numberToGuess,
-    guessArrayValues}) => {
+    numberToGuess }) => {
 
-    console.log('guessArrayValues: ', guessArrayValues)
     const restartGame = () => {
         setPlayerNumber(null)
         setGameOver(false)
@@ -48,14 +49,14 @@ const styles = StyleSheet.create({
     },
     
     imageContainer: {
-        width: 300,
-        height: 300,
+        width: imgContainerW,
+        height: imgContainerW,
         marginTop: 16,
     },
     image: {
-        width: '100%',
-        height: '100%',
-        borderRadius: 150,
+        width: imgContainerW,
+        height: imgContainerW,
+        borderRadius: imgContainerW/2,
         borderWidth: 2,
         borderColor: Colors.primary500,
     },

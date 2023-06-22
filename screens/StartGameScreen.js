@@ -10,24 +10,19 @@ const StartGameScreen = ({startGameHandler}) => {
     const [showModal, setShowModal] = useState(false)
 
     const confirmHandler = () => {
-      console.log('Processing input...', inputNumber )
       const playerNumber = parseInt(inputNumber)
       
       if (playerNumber < 1 || playerNumber > 99 || !Number.isInteger(playerNumber)) {
-        console.log('Player entered an INVALID number!!!')
         setShowModal(true)
         return
       }
-
-      console.log('Player entered a valid number: ', playerNumber )
+      console.log('\n   Let the game begin, Number to guess: ', playerNumber )
       startGameHandler(playerNumber)
-
-    }
+    } /* end of confirmHandler() */
 
     const resetInput = () => {
-      console.log('Resetting input...')
       setInputNumber('')
-    }
+    } /* end of resetInput() */
 
     return (
       <View style={styles.rootContainer}>
@@ -95,7 +90,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 12,
   },
-
 })
 
 export default StartGameScreen
